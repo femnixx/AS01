@@ -121,8 +121,10 @@ fun AvatarViewer(
                 painter = painterResource(id = R.drawable.eyelash),
                 contentDescription = "Eyelash",
                 modifier = Modifier
-                    .size(width = 110.dp, height = 30.dp)
-                    .offset(y = (-40).dp)
+                    .fillMaxWidth(0.35f)
+                    .align(Alignment.Center)
+                    .offset(y = (-38).dp),
+                contentScale = ContentScale.FillWidth
             )
         }
 
@@ -131,8 +133,10 @@ fun AvatarViewer(
                 painter = painterResource(id = R.drawable.eyes),
                 contentDescription = "Eye",
                 modifier = Modifier
-                    .size(width = 110.dp, height = 45.dp)
-                    .offset(y = (-20).dp)
+                    .fillMaxWidth(0.40f)
+                    .align(Alignment.Center)
+                    .offset(y = (-18).dp),
+                contentScale = ContentScale.FillWidth
             )
         }
 
@@ -141,8 +145,10 @@ fun AvatarViewer(
                 painter = painterResource(id = R.drawable.nose),
                 contentDescription = "Nose",
                 modifier = Modifier
-                    .size(width = 40.dp, height = 35.dp)
-                    .offset(y = 15.dp)
+                    .fillMaxWidth(0.15f)
+                    .align(Alignment.Center)
+                    .offset(y = 10.dp),
+                contentScale = ContentScale.FillWidth
             )
         }
 
@@ -151,8 +157,10 @@ fun AvatarViewer(
                 painter = painterResource(id = R.drawable.mouth),
                 contentDescription = "Mouth",
                 modifier = Modifier
-                    .size(width = 75.dp, height = 35.dp)
-                    .offset(y = 50.dp)
+                    .fillMaxWidth(0.25f)
+                    .align(Alignment.Center)
+                    .offset(y = 42.dp),
+                contentScale = ContentScale.FillWidth
             )
         }
     }
