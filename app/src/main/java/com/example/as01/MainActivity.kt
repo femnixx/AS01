@@ -12,7 +12,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.example.as01.data.User
+import com.example.as01.data.UserRepository
 import com.example.as01.navigation.Screen
 import com.example.as01.screens.AvatarScreen
 import com.example.as01.screens.LoginScreen
@@ -35,24 +37,36 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppNavigation() {
+    val context = LocalContext.current
     var currentScreen by remember { mutableStateOf<Screen>(Screen.Login) }
-    var user by remember { mutableStateOf(User()) }
+    var user by remember { mutableStateOf(UserRepository.getUser(context)) }
 
     when (currentScreen) {
         Screen.Login -> LoginScreen(
             onNavigateToRegistration = { currentScreen = Screen.Registration },
-            onNavigateToProfile = { currentScreen = Screen.Profile }
+            onNavigateToProfile = {
+                val stored = UserRepository.getUser(context)
+                if (stored.username.isNotBlank() && stored.password.isNotBlank()) {
+                    user = stored
+                    currentScreen = Screen.Profile
+                }
+            }
         )
         Screen.Registration -> RegistrationScreen(
             onSave = { newUser ->
                 user = newUser
+                UserRepository.saveUser(context, newUser)
                 currentScreen = Screen.Profile
             },
             onNavigateToLogin = { currentScreen = Screen.Login }
         )
         Screen.Profile -> ProfileScreen(
             user = user,
-            onNavigateToLogin = { currentScreen = Screen.Login },
+            onNavigateToLogin = {
+                UserRepository.clearUser(context)
+                user = User()
+                currentScreen = Screen.Login
+            },
             onNavigateToAvatar = { currentScreen = Screen.Avatar }
         )
         Screen.Avatar -> AvatarScreen(
