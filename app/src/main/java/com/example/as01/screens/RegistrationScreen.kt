@@ -1,6 +1,8 @@
 package com.example.as01.screens
 
+import android.app.DatePickerDialog
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,11 +20,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.as01.data.User
 import com.example.as01.ui.theme.Purple40
 import com.example.as01.ui.theme.Typography
+import java.util.Calendar
 
 @Composable
 fun RegistrationScreen(
@@ -38,6 +42,27 @@ fun RegistrationScreen(
     val phoneNumber = remember { mutableStateOf("") }
     val address = remember { mutableStateOf("") }
     val dateOfBirth = remember { mutableStateOf("") }
+
+    val calendar = Calendar.getInstance()
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH)
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+    val context = LocalContext.current
+
+    val datePickerDialog = remember {
+        DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val formattedMonth = String.format("%02d", selectedMonth + 1)
+                val formattedDay = String.format("%02d", selectedDay)
+                dateOfBirth.value = "$selectedDay/$formattedMonth/$selectedYear"
+            },
+            year,
+            month,
+            day
+        )
+    }
 
     Column(
         modifier = modifier
@@ -122,9 +147,12 @@ fun RegistrationScreen(
 
         OutlinedTextField(
             value = dateOfBirth.value,
-            onValueChange = { dateOfBirth.value = it },
+            onValueChange = {},
             label = { Text("Date of Birth") },
-            modifier = Modifier.fillMaxWidth()
+            readOnly = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { datePickerDialog.show() }
         )
 
         Spacer(modifier = Modifier.height(24.dp))

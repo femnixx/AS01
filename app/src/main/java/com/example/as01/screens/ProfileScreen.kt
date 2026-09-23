@@ -2,6 +2,7 @@ package com.example.as01.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,12 +13,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.VisualTransformation
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.as01.data.User
 import com.example.as01.ui.theme.Purple40
@@ -39,13 +41,20 @@ fun ProfileScreen(
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Text(
-                text = "Profil User",
-                style = Typography.bodyLarge,
-                color = Purple40
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Profil User",
+                    style = Typography.bodyLarge,
+                    color = Purple40
+                )
+                TextButton(onClick = onNavigateToAvatar) {
+                    Text("Avatar →")
+                }
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -95,7 +104,7 @@ fun ProfileScreen(
 }
 
 @Composable
-private fun ProfileTextField(label: String, value: String, visualTransformation: VisualTransformation = VisualTransformation.None) {
+private fun ProfileTextField(label: String, value: String, visualTransformation: androidx.compose.ui.text.input.VisualTransformation = androidx.compose.ui.text.input.VisualTransformation.None) {
     OutlinedTextField(
         value = value,
         onValueChange = {},

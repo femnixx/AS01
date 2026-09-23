@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -39,10 +40,8 @@ fun AppNavigation() {
 
     when (currentScreen) {
         Screen.Login -> LoginScreen(
-            user = user,
             onNavigateToRegistration = { currentScreen = Screen.Registration },
-            onNavigateToProfile = { currentScreen = Screen.Profile },
-            onNavigateToAvatar = { currentScreen = Screen.Avatar }
+            onNavigateToProfile = { currentScreen = Screen.Profile }
         )
         Screen.Registration -> RegistrationScreen(
             onSave = { newUser ->
@@ -56,6 +55,8 @@ fun AppNavigation() {
             onNavigateToLogin = { currentScreen = Screen.Login },
             onNavigateToAvatar = { currentScreen = Screen.Avatar }
         )
-        Screen.Avatar -> AvatarScreen()
+        Screen.Avatar -> AvatarScreen(
+            onBack = { currentScreen = Screen.Profile }
+        )
     }
 }
